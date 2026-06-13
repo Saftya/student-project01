@@ -1,0 +1,50 @@
+[
+  {
+    "q": "Which part of the Apollo spacecraft carried two astronauts down to the Moon's surface?",
+    "correct_id": "apollo_program_2"
+  },
+  {
+    "q": "Why is Apollo 13 remembered as a successful failure?",
+    "correct_id": "apollo_program_5"
+  },
+  {
+    "q": "What evidence did Curiosity find in Gale crater about ancient habitable environments?",
+    "correct_id": "mars_rovers_3"
+  },
+  {
+    "q": "Why was Jezero crater chosen as a strong target for Perseverance?",
+    "correct_id": "mars_rovers_4"
+  },
+  {
+    "q": "What kinds of human health effects are studied through microgravity research on the ISS?",
+    "correct_id": "international_space_station_3"
+  },
+  {
+    "q": "How do robotics such as Canadarm2 help operations on the ISS?",
+    "correct_id": "international_space_station_5"
+  },
+  {
+    "q": "Why did JWST need a segmented mirror and a large sunshield?",
+    "correct_id": "james_webb_telescope_1"
+  },
+  {
+    "q": "How does JWST help astronomers study the early universe?",
+    "correct_id": "james_webb_telescope_5"
+  },
+  {
+    "q": "Why was Orion's heat shield important during Artemis I?",
+    "correct_id": "artemis_program_2"
+  },
+  {
+    "q": "Why is the lunar south pole important for Artemis III?",
+    "correct_id": "artemis_program_4"
+  },
+  {
+    "q": "How did servicing missions improve the Hubble Space Telescope?",
+    "correct_id": "space_telescopes_1"
+  },
+  {
+    "q": "How did Kepler find exoplanets?",
+    "correct_id": "space_telescopes_5"
+  }
+]

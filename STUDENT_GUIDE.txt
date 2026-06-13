@@ -1,0 +1,167 @@
+Mini-RAG Workshop: Инструкция для студентов
+===========================================
+
+Цель
+----
+Вы соберете маленькую RAG-систему в файле assignment.py.
+
+Pipeline:
+
+document -> chunk -> embed -> index -> query -> retrieve -> evaluate -> rerank -> answer
+
+Писать код нужно только в assignment.py.
+Не редактируйте rag_core.py, main.py или demo_ui.py.
+
+
+Установка и запуск
+------------------
+1. Распакуйте проект:
+
+   unzip mini_rag_workshop_student.zip
+   cd week8_workshop
+
+   Если папка называется иначе, зайдите в распакованную папку.
+
+2. Загрузите готовый Docker image:
+
+   docker load -i ../mini_rag_workshop_image.tar
+
+   Если tar-файл лежит в этой же папке:
+
+   docker load -i mini_rag_workshop_image.tar
+
+3. Создайте файл .env:
+
+   cp .env.example .env
+
+4. Откройте .env и вставьте ваш Cohere API key:
+
+   COHERE_API_KEY=your_real_key_here
+
+5. Запустите student-контейнер:
+
+   docker compose -f docker-compose.student.yml up -d --no-build
+
+6. Зайдите в контейнер:
+
+   docker compose -f docker-compose.student.yml exec workshop bash
+
+7. Проверьте, что стартовый файл запускается:
+
+   python assignment.py
+
+Ожидаемый вывод:
+
+   Loaded articles: 6
+   Created chunks: 59
+   Loaded questions: 12
+
+
+Важно
+-----
+Запускайте python assignment.py ВНУТРИ Docker, а не на своем компьютере.
+
+Если terminal prompt выглядит примерно так, вы внутри Docker:
+
+   root@...:/app#
+
+Когда вы меняете assignment.py в VS Code, Docker rebuild делать не нужно.
+Просто снова запустите:
+
+   python assignment.py
+
+Build нужен только если менялись Dockerfile или requirements.txt.
+
+
+Что нужно сделать
+-----------------
+Откройте assignment.py и реализуйте функции по порядку.
+
+TASK 1: build_index(all_chunks, sources)
+    Создать embeddings для документов через Cohere и сохранить chunks в ChromaDB.
+    Вернуть collection и co.
+
+TASK 2: search(query, co, collection, top_k=5)
+    Превратить query в embedding и найти похожие chunks.
+    Вернуть {"ids": [...], "documents": [...]}.
+
+TASK 3: evaluate(questions, co, collection)
+    Посчитать recall@3.
+    Hit означает, что correct_id находится внутри top 3 retrieved ids.
+
+TASK 4: search_with_rerank(query, co, collection, top_k=3)
+    Сначала достать top 10 chunks.
+    Потом использовать Cohere rerank, чтобы переупорядочить результаты.
+
+TASK 5: rag_answer(query, co, collection)
+    Достать top chunks, собрать context, отправить вопрос в Cohere Chat API.
+    Вернуть:
+
+    {
+      "answer": "...",
+      "source_ids": [...]
+    }
+
+TASK 6: ablation_experiment(articles, questions, co)
+    Сравнить chunk_size 300, 500, 1000.
+    Напечатать accuracy для каждого размера.
+
+BONUS: hybrid_search(...)
+    Объединить BM25 и vector search через RRF.
+
+
+Как работать
+------------
+Внизу assignment.py есть закомментированные checkpoints.
+
+Работайте так:
+
+1. Реализуйте одну функцию.
+2. Раскомментируйте соответствующий checkpoint.
+3. Запустите:
+
+   python assignment.py
+
+4. Исправьте ошибки, если они есть.
+5. Переходите к следующей функции.
+
+Не пишите все сразу. Проверяйте маленькими шагами.
+
+
+Как задавать свои вопросы
+-------------------------
+После того как заработает search(), можно менять query:
+
+   results = search("How did Kepler discover exoplanets?", co, collection)
+   print(results["ids"])
+
+После того как заработает rag_answer(), можно сделать mini chat loop:
+
+   while True:
+       q = input("Ask: ")
+       if q.lower() in ["exit", "quit"]:
+           break
+       print(rag_answer(q, co, collection))
+
+Это не обычный ChatGPT.
+Система должна отвечать только по документам из data_assignment.
+
+
+Что показать в конце
+--------------------
+К концу занятия будьте готовы показать:
+
+1. Search result ids для одного вопроса.
+2. Baseline recall@3.
+3. Reranked ids.
+4. Один RAG answer.
+5. Source ids для этого answer.
+6. Ablation results для chunk sizes 300, 500, 1000.
+7. Один failure case: вопрос, где retrieval сработал плохо, и объяснение почему.
+
+
+Главная идея
+------------
+Сначала оцениваем retrieval, потом добавляем generation.
+
+Если retrieval плохой, LLM даст уверенный ответ на плохом context.

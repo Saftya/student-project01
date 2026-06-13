@@ -1,0 +1,19 @@
+name: mini_rag_demo_project
+
+services:
+  demo:
+    image: mini-rag-workshop:latest
+    build: .
+    container_name: mini_rag_demo
+    working_dir: /app
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+      - ORT_LOGGING_LEVEL=ERROR
+    ports:
+      - "8501:8501"
+    command: streamlit run demo_ui.py --server.address 0.0.0.0 --server.port 8501
+    tty: true

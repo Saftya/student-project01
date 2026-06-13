@@ -1,0 +1,9 @@
+.env
+chroma_demo/
+chroma_demo_ui/
+chroma_assignment/
+__pycache__/
+*.pyc
+*.zip
+*.tar
+.DS_Store

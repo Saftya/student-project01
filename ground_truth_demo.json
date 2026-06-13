@@ -1,0 +1,34 @@
+[
+  {
+    "q": "What problem do dense word embeddings solve compared with one-hot or bag-of-words vectors?",
+    "correct_id": "word_embedding_0"
+  },
+  {
+    "q": "What does multi-head attention allow a transformer to notice?",
+    "correct_id": "transformer_2"
+  },
+  {
+    "q": "Why do vector search systems use approximate nearest neighbor search?",
+    "correct_id": "vector_database_1"
+  },
+  {
+    "q": "Why should a test set not be used repeatedly during development?",
+    "correct_id": "machine_learning_5"
+  },
+  {
+    "q": "What does a vector database return when a query is represented as a vector?",
+    "correct_id": "vector_database_0"
+  },
+  {
+    "q": "What can directions in word embedding space sometimes represent?",
+    "correct_id": "word_embedding_2"
+  },
+  {
+    "q": "What is overfitting in machine learning?",
+    "correct_id": "machine_learning_3"
+  },
+  {
+    "q": "How do query, key, and value vectors relate to self-attention?",
+    "correct_id": "transformer_1"
+  }
+]
